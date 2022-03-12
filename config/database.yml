@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['PSQL_USER'] %>
+  password: <%= ENV['PSQL_PASS'] %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: shramble
+
+# test:
+#   adapter: sqlite3
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   database: db/test.sqlite3
+#   timeout: 5000
+
+production:
+  <<: *default
+  database: db/production.sqlite3
