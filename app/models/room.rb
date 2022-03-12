@@ -2,7 +2,7 @@ class Room < ApplicationRecord
   has_many :players
   has_many :matches
 
-  # @TODO(Ty): consider changing 'room_code' to 'room'
+  # @TODO(Ty): consider changing 'room_code' to 'code'
 
   after_initialize :set_defaults, unless: :persisted?
 

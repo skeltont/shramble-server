@@ -3,8 +3,8 @@ class RoomController < ApplicationController
 
   def create
     @room = Room.create!
-    player = Player.create!(name: create_params[:player_name], room_id: @room.id, owner: true)
-    @token = generate_token(player.id, @room.id)
+    @player = Player.create!(name: create_params[:player_name], room_id: @room.id, owner: true)
+    @token = generate_token(@player.id, @room.id)
   end
 
   def join
@@ -14,12 +14,16 @@ class RoomController < ApplicationController
     # on form resubmission.
 
     begin
-      player = Player.find_by(id: @decoded['player_id'], room_id: @decoded['room_id'])
-      player.update_attribute(:name, join_params[:player_name])
+      @player = Player.find_by(id: @decoded[:player_id], room_id: @decoded[:room_id])
+      @player.update_attribute(:name, join_params[:player_name])
     rescue NoMethodError, ActiveRecord::RecordNotFound => e
-      player = Player.create!(name: join_params[:player_name], room_id: @room.id)
-      @token = generate_token(player.id, @room.id)
+      @player = Player.create!(name: join_params[:player_name], room_id: @room.id)
+      @token = generate_token(@player.id, @room.id)
     end
+  end
+
+  def index
+    @room = Room.find_by(id: @decoded[:room_id])
   end
 
   private

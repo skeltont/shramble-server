@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     header = header.split(' ').last if header
 
     begin
-      @decoded = JsonWebToken.decode(header)
+      @decoded = JsonWebToken.decode(header).symbolize_keys
     rescue JWT::DecodeError => e
       @decoded = nil
     end

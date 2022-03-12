@@ -9,7 +9,7 @@ matches = Match.create([
   { room_id: room.id, wager: 5.0 },
 ])
 
-alice = Player.create(room_id: room.id, name: 'Alice')
+alice = Player.create(room_id: room.id, name: 'Alice', owner: true)
 bob = Player.create(room_id: room.id, name: 'Bob')
 carol = Player.create(room_id: room.id, name: 'Carol')
 
