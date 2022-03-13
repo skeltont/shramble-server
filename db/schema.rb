@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_09_065147) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_13_015636) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,12 +23,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_065147) do
     t.index ["room_id"], name: "index_contestants_on_room_id"
   end
 
+  create_table "match_contestants", force: :cascade do |t|
+    t.uuid "match_id"
+    t.uuid "contestant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contestant_id"], name: "index_match_contestants_on_contestant_id"
+    t.index ["match_id"], name: "index_match_contestants_on_match_id"
+  end
+
   create_table "matches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "room_id"
     t.decimal "wager", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "active", null: false
+    t.string "stage", default: "active", null: false
     t.index ["room_id"], name: "index_matches_on_room_id"
   end
 
@@ -41,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_065147) do
     t.index ["room_id"], name: "index_players_on_room_id"
   end
 
-  create_table "results", force: :cascade do |t|
+  create_table "results", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "player_id"
     t.uuid "contestant_id"
     t.uuid "match_id"
@@ -58,10 +67,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_065147) do
     t.string "room_code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "pending", null: false
+    t.string "stage", default: "pending", null: false
   end
 
   add_foreign_key "contestants", "rooms"
+  add_foreign_key "match_contestants", "contestants"
+  add_foreign_key "match_contestants", "matches"
   add_foreign_key "matches", "rooms"
   add_foreign_key "players", "rooms"
   add_foreign_key "results", "contestants"

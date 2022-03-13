@@ -3,10 +3,10 @@
 room = Room.create(room_code: 'abcde')
 
 matches = Match.create([
-  { room_id: room.id, wager: 2.0 },
-  { room_id: room.id, wager: 2.0 },
-  { room_id: room.id, wager: 2.5 },
-  { room_id: room.id, wager: 5.0 },
+  { room_id: room.id, wager: 2.0, stage: 'inactive' },
+  { room_id: room.id, wager: 2.0, stage: 'inactive' },
+  { room_id: room.id, wager: 2.5, stage: 'inactive' },
+  { room_id: room.id, wager: 5.0, stage: 'inactive' },
 ])
 
 alice = Player.create(room_id: room.id, name: 'Alice', owner: true)
@@ -17,6 +17,15 @@ spartacus = Contestant.create(room_id: room.id, name: 'Spartacus')
 crixus = Contestant.create(room_id: room.id, name: 'Crixus')
 gannicus = Contestant.create(room_id: room.id, name: 'Gannicus')
 oenomaus = Contestant.create(room_id: room.id, name: 'Oenomaus')
+
+matches.each do |match|
+  MatchContestant.create([
+    {match_id: match.id, contestant_id: spartacus.id},
+    {match_id: match.id, contestant_id: crixus.id},
+    {match_id: match.id, contestant_id: gannicus.id},
+    {match_id: match.id, contestant_id: oenomaus.id},
+  ])
+end
 
 Result.create([
   # Spartacus win
