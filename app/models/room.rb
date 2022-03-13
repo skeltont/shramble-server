@@ -1,6 +1,6 @@
 class Room < ApplicationRecord
-  has_many :player
-  has_many :match
+  has_many :players
+  has_many :matches
 
   # @TODO(Ty): consider changing 'room_code' to 'code'
 

@@ -13,16 +13,15 @@ class ResultController < ApplicationController
   end
 
   def index
-    room = Room.find_by(id: @decoded[:room_id])
+    room = Room.find(@decoded[:room_id])
     @match = Match.find_by(room_id: room.id, stage: 'active')
     @results = Result.where(match_id: @match.id)
     @contestants = MatchContestant.where(match_id: @match.id).map(&:contestant)
   end
 
   def standings
-    room = Room.find_by(id: @decoded[:room_id])
-
-    @players = Player.where(room_id: room.id)
+    room = Room.find(@decoded[:room_id])
+    @players = room.players
   end
 
   private

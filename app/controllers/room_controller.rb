@@ -10,11 +10,8 @@ class RoomController < ApplicationController
   def join
     @room = Room.find_by(room_code: join_params[:room_code])
 
-    # currently having an issue with the react state not tracking the room_code form input
-    # on form resubmission.
-
     begin
-      @player = Player.find_by(id: @decoded[:player_id], room_id: @decoded[:room_id])
+      @player = Player.find_by(id: @decoded[:player_id], room_id: @room.id)
       @player.update_attribute(:name, join_params[:player_name])
     rescue NoMethodError, ActiveRecord::RecordNotFound => e
       @player = Player.create!(name: join_params[:player_name], room_id: @room.id)
