@@ -1,1 +1,1 @@
-json.result_id @result.id
+json.result_id @presenter.result.id

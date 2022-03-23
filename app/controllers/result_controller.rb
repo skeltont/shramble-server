@@ -2,14 +2,11 @@ class ResultController < ApplicationController
   before_action :decode_token
 
   def create
-    @result = Result.find_or_create_by(
+    @presenter = Results::RecordBetPresenter.new(
       player_id: @decoded[:player_id],
-      match_id: create_params[:match_id]
+      **create_params.to_h.symbolize_keys
     )
-
-    unless @result.contestant_id == create_params[:contestant_id]
-      @result.update_attribute(:contestant_id, create_params[:contestant_id])
-    end
+    @presenter.record_bet
   end
 
   def index
