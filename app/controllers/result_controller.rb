@@ -2,11 +2,12 @@ class ResultController < ApplicationController
   before_action :decode_token
 
   def create
-    @presenter = Results::RecordBetPresenter.new(
+    bet = Results::RecordBetService.new(
       player_id: @decoded[:player_id],
       **create_params.to_h.symbolize_keys
     )
-    @presenter.record_bet
+    bet.record_bet
+    @result = bet.result
   end
 
   def index
