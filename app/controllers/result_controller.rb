@@ -11,10 +11,7 @@ class ResultController < ApplicationController
   end
 
   def index
-    room = Room.find(@decoded[:room_id])
-    @match = Match.find_by(room_id: room.id, stage: 'active')
-    @results = Result.where(match_id: @match.id)
-    @contestants = MatchContestant.where(match_id: @match.id).map(&:contestant)
+    @presenter = Results::OngoingRoundPresenter.new(room_id: @decoded[:room_id])
   end
 
   def standings

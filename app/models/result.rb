@@ -28,4 +28,8 @@ class Result < ApplicationRecord
   def pass?
     !self.win && self.pass
   end
+
+  def bet
+    self.pass? ? 'pass' : self.contestant.name
+  end
 end
