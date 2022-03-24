@@ -3,7 +3,8 @@ class Player < ApplicationRecord
   has_many :results
 
   def winnings
-    results = Result.joins(:match).where(player_id: self.id)
-    results.sum(0.0) { |r| r.win ? (r.match.winnings - r.match.wager) : -r.match.wager }.to_d
+    Result.joins(:match).where(player_id: self.id).sum(0.0) do |r|
+      (r.win ? r.match.winnings : 0) - (r.pass ? 0 : r.match.wager)
+    end
   end
 end

@@ -16,4 +16,16 @@ class Result < ApplicationRecord
     self.contestant_id = contestant_id
     self.pass = false
   end
+
+  def win?
+    self.win && !self.pass
+  end
+
+  def loss?
+    !self.win && !self.pass
+  end
+
+  def pass?
+    !self.win && self.pass
+  end
 end
