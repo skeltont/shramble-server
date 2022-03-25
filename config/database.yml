@@ -9,11 +9,9 @@ development:
   <<: *default
   database: shramble
 
-# test:
-#   adapter: sqlite3
-#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-#   database: db/test.sqlite3
-#   timeout: 5000
+test:
+  <<: *default
+  database: shramble_test
 
 production:
   <<: *default
