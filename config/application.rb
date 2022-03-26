@@ -6,13 +6,6 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv::Railtie.load
-
-PSQL_HOST = ENV['PSQL_HOST']
-PSQL_USER = ENV['PSQL_USER']
-PSQL_PASS = ENV['PSQL_PASS']
-PSQL_PORT = ENV['PSQL_PORT']
-
 module Shramble
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
