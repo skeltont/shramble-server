@@ -17,6 +17,7 @@ gem "puma", "~> 5.0"
 gem "jbuilder"
 
 gem 'jwt'
+gem "recaptcha"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

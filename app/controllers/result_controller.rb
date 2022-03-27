@@ -2,18 +2,16 @@ class ResultController < ApplicationController
   before_action :decode_token
 
   def create
-    @presenter = Results::RecordBetPresenter.new(
+    bet = Results::RecordBetService.new(
       player_id: @decoded[:player_id],
       **create_params.to_h.symbolize_keys
     )
-    @presenter.record_bet
+    bet.record_bet
+    @result = bet.result
   end
 
   def index
-    room = Room.find(@decoded[:room_id])
-    @match = Match.find_by(room_id: room.id, stage: 'active')
-    @results = Result.where(match_id: @match.id)
-    @contestants = MatchContestant.where(match_id: @match.id).map(&:contestant)
+    @presenter = Results::OngoingRoundPresenter.new(room_id: @decoded[:room_id])
   end
 
   def standings

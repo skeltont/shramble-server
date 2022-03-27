@@ -1,4 +1,4 @@
-class Results::RecordBetPresenter
+class Results::RecordBetService
   def initialize(player_id:, contestant_id:, match_id:)
     @player_id = player_id
     @contestant_id = contestant_id

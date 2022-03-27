@@ -1,5 +1,6 @@
 class RoomController < ApplicationController
   before_action :decode_token, except: :create
+  before_action :process_recaptcha, only: [:create, :join]
 
   def create
     @room = Room.create!
@@ -25,15 +26,21 @@ class RoomController < ApplicationController
 
   private
 
+  def process_recaptcha
+    unless verify_recaptcha(response: params[:room][:recaptcha_token])
+      render :json => { :error => 'invalid/missing recaptcha' }, :status => 403
+    end
+  end
+
   def generate_token(player_id, room_id)
     JsonWebToken.encode({player_id: player_id, room_id: room_id})
   end
 
   def create_params
-    params.require(:room).permit(:player_name)
+    params.require(:room).permit(:player_name, :recaptcha_token)
   end
 
   def join_params
-    params.require(:room).permit(:player_name, :room_code)
+    params.require(:room).permit(:player_name, :room_code, :recaptcha_token)
   end
 end

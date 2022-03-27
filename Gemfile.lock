@@ -102,6 +102,7 @@ GEM
       activesupport (>= 5.0.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
+    json (2.6.1)
     jwt (2.3.0)
     loofah (2.14.0)
       crass (~> 1.0.2)
@@ -175,6 +176,8 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    recaptcha (5.9.0)
+      json
     reline (0.3.1)
       io-console (~> 0.5)
     rexml (3.2.5)
@@ -244,6 +247,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   rswag
+  recaptcha
   sqlite3 (~> 1.4)
   tzinfo-data
 
