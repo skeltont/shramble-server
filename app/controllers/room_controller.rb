@@ -1,6 +1,6 @@
 class RoomController < ApplicationController
   before_action :decode_token, except: :create
-  before_action :process_recaptcha
+  before_action :process_recaptcha, only: [:create, :join]
 
   def create
     @room = Room.create!

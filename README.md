@@ -9,13 +9,12 @@ and will not implement any features to support something like that.
 # Setup
 ## .env
 
-Postgres creds
 ```
-PSQL_HOST=...
-PSQL_USER=...
-PSQL_PASS=...
-PSQL_PORT=...
+DATABASE_URL='postgres://user:pass@127.0.0.1/shramble'
+RECAPTCHA_SITE_KEY='...'
+RECAPTCHA_SECRET_KEY='...'
 ```
+be sure to generate your own (v2) [google recaptcha](https://www.google.com/recaptcha/admin/create)
 
 ## dependencies
 ```
