@@ -9,4 +9,8 @@ class Room < ApplicationRecord
   def set_defaults
     self.room_code ||= SecureRandom.hex.to_s[0, 8].upcase
   end
+
+  def active_match
+    matches.where(stage: 'active').first
+  end
 end

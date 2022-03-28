@@ -100,9 +100,9 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    json (2.6.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
-    json (2.6.1)
     jwt (2.3.0)
     loofah (2.14.0)
       crass (~> 1.0.2)
@@ -244,10 +244,10 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.2, >= 7.0.2.2)
   rails-erd
+  recaptcha
   rspec
   rspec-rails
   rswag
-  recaptcha
   sqlite3 (~> 1.4)
   tzinfo-data
 

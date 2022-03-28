@@ -8,11 +8,11 @@ class Results::OngoingRoundPresenter
   end
 
   def results
-    Result.where(match_id: match.id)
+    Result.where(match_id: match.id).sort_by { |r| r.player.name }
   end
 
   def contestants
-    MatchContestant.where(match_id: match.id).map(&:contestant)
+    match.sorted_contestants
   end
 
   private
