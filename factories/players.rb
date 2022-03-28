@@ -7,6 +7,7 @@ FactoryBot.define do
     trait :with_bet do
       transient do
         contestant { nil }
+        win { false }
       end
 
       after(:create) do |player, evaluator|
@@ -14,8 +15,11 @@ FactoryBot.define do
           :result,
           match: player.room.active_match,
           player: player,
-          contestant: evaluator.contestant
+          contestant: evaluator.contestant,
+          win: evaluator.win,
         )
+
+        player.room.active_match.calculate_winnings
       end
     end
   end

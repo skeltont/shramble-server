@@ -36,8 +36,7 @@ class MatchController < ApplicationController
       end
     end
 
-    winnings = results.sum(&:wager) / results.count(&:win?)
-    match.update_attribute(:winnings, winnings)
+    match.calculate_winnings
   end
 
   private
