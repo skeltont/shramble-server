@@ -1,5 +1,6 @@
 default: &default
-  url: <%= ENV["DATABASE_URL"] %> 
+  adapter: postgresql
+  url: <%= ENV["DATABASE_URL"] %>
   timeout: 5000
 
 development:
@@ -11,4 +12,4 @@ test:
 
 production:
   <<: *default
-  
+

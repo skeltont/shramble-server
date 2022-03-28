@@ -15,8 +15,7 @@ class ResultController < ApplicationController
   end
 
   def standings
-    room = Room.find(@decoded[:room_id])
-    @players = room.players
+    @players = Room.find(@decoded[:room_id]).players
   end
 
   private
