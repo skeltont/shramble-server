@@ -5,7 +5,7 @@ class RoomController < ApplicationController
   def create
     @room = Room.create!
     @player = Player.create!(name: create_params[:player_name], room_id: @room.id, owner: true)
-    @token = generate_token(@player.id, @room.id)
+    @token = ApplicationController.generate_token(@player.id, @room.id)
   end
 
   def join
@@ -16,7 +16,7 @@ class RoomController < ApplicationController
       @player.update_attribute(:name, join_params[:player_name])
     rescue NoMethodError, ActiveRecord::RecordNotFound => e
       @player = Player.create!(name: join_params[:player_name], room_id: @room.id)
-      @token = generate_token(@player.id, @room.id)
+      @token = ApplicationController.generate_token(@player.id, @room.id)
     end
   end
 
@@ -30,10 +30,6 @@ class RoomController < ApplicationController
     unless verify_recaptcha(response: params[:room][:recaptcha_token])
       render :json => { :error => 'invalid/missing recaptcha' }, :status => 403
     end
-  end
-
-  def generate_token(player_id, room_id)
-    JsonWebToken.encode({player_id: player_id, room_id: room_id})
   end
 
   def create_params
