@@ -11,6 +11,7 @@ and will not implement any features to support something like that.
 
 ```
 DATABASE_URL='postgres://user:pass@127.0.0.1/shramble'
+TEST_DATABASE_URL='postgres://user:pass@127.0.0.1/shramble_test'
 RECAPTCHA_SITE_KEY='...'
 RECAPTCHA_SECRET_KEY='...'
 ```
@@ -35,11 +36,11 @@ Follow steps at [rvm.io](https://rvm.io/)
 
 install our version of ruby
 ```
-rvm install ruby-2.7.0
+rvm install ruby-3.0.1
 ```
 swap to our version with
 ```
-rvm use 2.7.0
+rvm use 3.0.1
 ```
 if that gives you issues, you'll need to swap to a login shell with something like
 ```
