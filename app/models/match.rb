@@ -11,7 +11,7 @@ class Match < ApplicationRecord
   end
 
   def calculate_winnings
-    if self.results.count(&:win?)
+    if self.results.any?(&:win?)
       self.update_attribute(:winnings, self.results.sum(&:wager) / self.results.count(&:win?))
     end
   end

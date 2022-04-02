@@ -58,4 +58,5 @@ end
 
 group :test do
   gem 'database_cleaner'
+  gem 'pry', '~> 0.13.1'
 end

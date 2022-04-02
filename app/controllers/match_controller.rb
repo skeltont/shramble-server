@@ -18,7 +18,7 @@ class MatchController < ApplicationController
 
   def start
     @room = Room.find(@decoded[:room_id])
-    @room.update_attribute(:stage, 'onging')
+    @room.update!(stage: 'ongoing')
   end
 
   def end
