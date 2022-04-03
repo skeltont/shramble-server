@@ -3,7 +3,7 @@ class ContestantController < ApplicationController
 
   def index
     room = Room.find(@decoded[:room_id])
-    @match = Match.active.find_by(room_id: room.id)
-    @contestants = MatchContestant.where(match_id: @match.id).map(&:contestant)
+    @match = room.active_match
+    @contestants = @match.sorted_contestants
   end
 end
