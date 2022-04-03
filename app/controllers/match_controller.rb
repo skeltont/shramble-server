@@ -16,6 +16,11 @@ class MatchController < ApplicationController
     end
   end
 
+  def new
+    room = Room.find(@decoded[:room_id])
+    room.update_attribute(:stage, 'pending')
+  end
+
   def start
     @room = Room.find(@decoded[:room_id])
     @room.update!(stage: 'ongoing')
@@ -43,7 +48,7 @@ class MatchController < ApplicationController
 
   def authorize
     player = Player.find_by(id: @decoded[:player_id])
-    render json: { 'error': 'you are not the owner' } unless player.owner
+    render json: { 'error': 'you are not the owner' }, :status => 403 unless player.owner
   end
 
   def create_params
