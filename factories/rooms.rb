@@ -5,8 +5,8 @@ FactoryBot.define do
 
   trait :populated do
     after(:create) do |room|
-      player_1 = FactoryBot.create(:player, room: room)
-      player_2 = FactoryBot.create(:player, room: room)
+      player_1 = FactoryBot.create(:player, room: room, name: 'player 1')
+      player_2 = FactoryBot.create(:player, room: room, name: 'player 2')
 
       FactoryBot.create(:match, :with_contestants, room: room)
 

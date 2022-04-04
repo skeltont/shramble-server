@@ -49,23 +49,14 @@ RSpec.describe "Matches", type: :request do
         }
       }
 
-      response '200', 'response received' do
-        schema type: :object,
-          properties: {
-            next_stage: { type: :string },
-          },
-          required: %w(next_stage)
-
-        it 'succeeds with a 200 and the current round standings' do |example|
+      response '204', 'response received' do
+        it 'succeeds with a 204' do |example|
           expect{
             submit_request(example.metadata)
           }.to change{
             room.reload.stage
           }.from('ongoing').to('results')
-
-          assert_response_matches_metadata(example.metadata)
-
-          expect(response_json[:next_stage]).to eq 'results'
+           .and have_broadcasted_to("room_#{room.room_code}").with(stage: 'results')
 
           match = room.matches.first
           expect(match.stage).to eq 'inactive'
@@ -74,7 +65,7 @@ RSpec.describe "Matches", type: :request do
 
           expect(player.results.first.win?).to eq true
 
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(204)
         end
       end
     end

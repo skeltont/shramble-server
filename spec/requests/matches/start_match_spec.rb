@@ -38,20 +38,14 @@ RSpec.describe "Matches", type: :request do
         }
       }
 
-      response '200', 'response received' do
-        schema type: :object,
-          properties: {
-            next_stage: { type: :string },
-          },
-          required: %w(next_stage)
+      response '204', 'response received' do
+        it 'succeeds with a 204' do |example|
+          expect{
+            submit_request(example.metadata)
+          }.to change{room.reload.stage}.from('betting').to('ongoing')
+           .and have_broadcasted_to("room_#{room.room_code}").with(stage: 'ongoing')
 
-        it 'succeeds with a 200 and the current round standings' do |example|
-          expect{submit_request(example.metadata)}.to change{room.reload.stage}.from('betting').to('ongoing')
-
-          assert_response_matches_metadata(example.metadata)
-          expect(response_json[:next_stage]).to eq 'ongoing'
-
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(204)
         end
       end
     end
