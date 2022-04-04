@@ -25,22 +25,14 @@ RSpec.describe "Matches", type: :request do
         )
       end
 
-      response '200', 'response received' do
-        schema type: :object,
-          properties: {
-            next_stage: { type: :string },
-          },
-          required: %w(next_stage)
+      response '204', 'response received' do
+        it 'succeeds with a 204' do |example|
+          expect {
+            submit_request(example.metadata)
+          }.to have_broadcasted_to("room_#{room.room_code}").with(stage: 'pending')
 
-        it 'succeeds with a 200' do |example|
-          submit_request(example.metadata)
-
-          assert_response_matches_metadata(example.metadata)
-          expect(response.status).to eq(200)
-
-          expect(response_json[:next_stage]).to eq 'pending'
+          expect(response.status).to eq(204)
         end
-
       end
 
       response '403', 'error processing request' do

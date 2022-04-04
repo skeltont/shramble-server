@@ -2,6 +2,9 @@ require_relative "boot"
 
 require "rails/all"
 
+## only needed when testing production locally with .env.production
+# require 'dotenv/load'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)

@@ -2,6 +2,13 @@ class MatchController < ApplicationController
   before_action :decode_token
   before_action :authorize
 
+  def new
+    room = Room.find(@decoded[:room_id])
+    room.update_attribute(:stage, 'pending')
+
+    broadcast_stage(room.room_code, 'pending')
+  end
+
   def create
     room = Room.find(@decoded[:room_id])
     room.update_attribute(:stage, 'betting')
@@ -14,16 +21,15 @@ class MatchController < ApplicationController
 
       MatchContestant.create!(match_id: match.id, contestant_id: contestant.id)
     end
-  end
 
-  def new
-    room = Room.find(@decoded[:room_id])
-    room.update_attribute(:stage, 'pending')
+    broadcast_stage(room.room_code, 'betting')
   end
 
   def start
-    @room = Room.find(@decoded[:room_id])
-    @room.update!(stage: 'ongoing')
+    room = Room.find(@decoded[:room_id])
+    room.update!(stage: 'ongoing')
+
+    broadcast_stage(room.room_code, 'ongoing')
   end
 
   def end
@@ -42,9 +48,15 @@ class MatchController < ApplicationController
     end
 
     match.calculate_winnings
+
+    broadcast_stage(room.room_code, 'results')
   end
 
   private
+
+  def broadcast_stage(room_code, stage)
+    ActionCable.server.broadcast("room_#{room_code}", { stage: stage })
+  end
 
   def authorize
     player = Player.find_by(id: @decoded[:player_id])

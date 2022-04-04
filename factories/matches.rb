@@ -8,8 +8,8 @@ FactoryBot.define do
 
     trait :with_contestants do
       after(:create) do |match, evaluator|
-        FactoryBot.create(:contestant, room: evaluator.room, matches: [match])
-        FactoryBot.create(:contestant, room: evaluator.room, matches: [match])
+        FactoryBot.create(:contestant, room: evaluator.room, name: 'contestant 1', matches: [match])
+        FactoryBot.create(:contestant, room: evaluator.room, name: 'contestant 2', matches: [match])
       end
     end
   end

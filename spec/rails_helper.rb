@@ -41,6 +41,10 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.before(:example) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
   config.include RequestSpecHelpers, :type => :request
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
