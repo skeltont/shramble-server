@@ -6,6 +6,10 @@ class Match < ApplicationRecord
 
   scope :active, -> { where(stage: 'active') }
 
+  def self.deactivate_all_for_room(room_id)
+    where(room_id: room_id, stage: 'active').update!(stage: 'inactive')
+  end
+
   def sorted_contestants
     self.contestants.sort_by(&:name)
   end

@@ -13,11 +13,10 @@ class MatchController < ApplicationController
     room = Room.find(@decoded[:room_id])
     room.update_attribute(:stage, 'betting')
 
+    Match.deactivate_all_for_room(room.id)
     match = Match.create!(room_id: room.id, wager: create_params[:stake])
     create_params[:contestants].each do |c|
-      unless Contestant.find_by(room_id: room.id, name: c[:name])
-        contestant = Contestant.create!(name: c[:name], room_id: room.id)
-      end
+      contestant = Contestant.find_or_create_by!(room_id: room.id, name: c[:name])
 
       MatchContestant.create!(match_id: match.id, contestant_id: contestant.id)
     end
